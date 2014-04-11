@@ -3,9 +3,8 @@
 This repository holds examples of data visualization using D3.js.
 For simple viewing, start a simple HTTP server using: <br/>
 
-python -m SimpleHTTPServer 8888 &
+<blockquote>python -m SimpleHTTPServer 8888 &</blockquote>
 
-<br>
 
 <h2>Examples</h2>
 <ul>
