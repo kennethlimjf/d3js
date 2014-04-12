@@ -9,4 +9,5 @@ For simple viewing, start a simple HTTP server using: <br/>
 <h2>Examples</h2>
 <ul>
 	<li>Bar Chart</li>
+	<li>Column Chart</li>
 </ul>
