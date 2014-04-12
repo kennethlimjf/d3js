@@ -37,7 +37,7 @@ function graph (error, data) {
 	// Append text after the end of each bar
 	barGroups.append('text')
 				.attr('x', function(d) { return x(d.frequency) + 5; })
-				.attr('y', barHeight/1.55 )
+				.attr('y', barHeight / 1.55 )
 				.attr('fill', 'black')
 				.attr('font-size', 10)
 				.text(function(d){ return d.letter; });

@@ -3,14 +3,16 @@ var  margin = { top: 100, left: 100, right: 100, bottom: 100 },
 	   width = 800 - margin.left - margin.right, 		// Width of the chart
 	   height = 600 - margin.top - margin.bottom,		// Height of the chart
 	   textLabelSize = 10,
-	   textLabelColor = 'black',
-	   barColor = 'steelblue';
+	   textLabelColor = 'black';
 
 var x = d3.scale.ordinal()
                 .rangeRoundBands([0, width]);
 
 var y = d3.scale.linear()
                 .range([height, 0]);
+
+var green = d3.scale.linear()
+                    .rangeRound([50, 255]);
 
 // Create a row and column for SVG canvas later
 var column = d3.select('body').append('div')
@@ -28,6 +30,7 @@ d3.tsv('data/data.tsv', type, graph);
 function graph(error, data){
   x.domain( data.map(function(d) { return d.letter; }) );
   y.domain( [ 0, d3.max(data, function(d) { return d.frequency; }) ] );
+  green.domain( [0, d3.max(data, function(d) { return d.frequency; }) ] );
 
   var barWidth = width / data.length;
 
@@ -35,13 +38,14 @@ function graph(error, data){
                      .data(data)
                      .enter()
                      .append('g')
+                     .attr('fill', 'black')
                      .attr('transform', function(d,i) { return 'translate(' + (barWidth * i) + ', 0)'; } );
 
   barGroups.append('rect')
            .attr('y', function(d) { return y(d.frequency); })
            .attr('width', barWidth - 1)
            .attr('height', function(d){ return height - y(d.frequency); })
-           .attr('fill', barColor);
+           .attr('fill', function(d) { return 'rgb(0,'+green(d.frequency)+',0)'; });
 
   var xAxis = d3.svg.axis()
                      .scale(x)
