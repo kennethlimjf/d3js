@@ -53,7 +53,7 @@ function graph(error, data){
     	.call(xAxis)
     		.append('text')
     			.attr('x', function() { return width * 0.45} )
-    			.attr('y', 35)
+      		.attr('y', 35)
     			.text('Letters');
 
     var yAxis = d3.svg.axis()
