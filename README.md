@@ -10,4 +10,5 @@ For simple viewing, start a simple HTTP server using: <br/>
 <ul>
 	<li>Bar Chart</li>
 	<li>Column Chart</li>
+	<li>Scatter Plot</li>
 </ul>
