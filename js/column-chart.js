@@ -6,7 +6,7 @@ var  margin = { top: 100, left: 100, right: 100, bottom: 100 },
 	   textLabelColor = 'black';
 
 var x = d3.scale.ordinal()
-                .rangeRoundBands([0, width]);
+                .rangeRoundBands([0, width], 0.03);
 
 var y = d3.scale.linear()
                 .range([height, 0]);
@@ -38,14 +38,18 @@ function graph(error, data){
                      .data(data)
                      .enter()
                      .append('g')
+                     .attr('class', 'bar')
                      .attr('fill', 'black')
                      .attr('transform', function(d,i) { return 'translate(' + (barWidth * i) + ', 0)'; } );
 
   barGroups.append('rect')
+           .attr('class', 'tooltips')
            .attr('y', function(d) { return y(d.frequency); })
-           .attr('width', barWidth - 1)
            .attr('height', function(d){ return height - y(d.frequency); })
-           .attr('fill', function(d) { return 'rgb(0,'+green(d.frequency)+',0)'; });
+           .attr('width', x.rangeBand())
+           .attr('fill', function(d){ return 'rgb(0,'+green(d.frequency)+',0)'; })
+           .append('title')
+           .text(function(d) { return d.frequency; });
 
   var xAxis = d3.svg.axis()
                      .scale(x)
@@ -56,7 +60,8 @@ function graph(error, data){
      .attr('transform', 'translate(0,'+height+')')
      .call(xAxis)
      .append('text')
-     .attr('x', function() { return width * 0.45} )
+     .attr('text-anchor', 'middle')
+     .attr('x', width / 2 )
      .attr('y', 35)
      .text('Letters');
 
@@ -73,6 +78,35 @@ function graph(error, data){
      .attr('transform', 'rotate(-90)')
      .style('text-anchor', 'end')
      .text("Frequency");
+
+  // Sort Function
+  var sortBars = function(){
+
+    // Update domain
+    data.sort(function(a,b){
+          return d3.ascending(a.frequency, b.frequency);
+        });
+    x.domain( data.map(function(d) { return d.letter; }) );
+    // Redraw xAxis
+    d3.select('.x.axis')
+        .transition()
+        .call(xAxis);
+    
+    // Sort bars
+    svg.selectAll('.bar')
+        .sort(function(a,b){
+          return d3.ascending(a.frequency, b.frequency);
+        })
+        .transition()
+        .duration(500)
+        .attr('transform', function(d,i) { return 'translate(' + (barWidth * i) + ', 0)'; } );
+  };
+
+  // Create sorting function
+  svg.on('click', function(){
+    console.log('Sort Bars!');
+    sortBars();
+  });
 }
 
 function type(d) {
