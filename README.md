@@ -5,6 +5,7 @@ For simple viewing, start a simple HTTP server using: <br/>
 
 <blockquote>python -m SimpleHTTPServer 8888 &</blockquote>
 
+
 <h2>Examples</h2>
 <ul>
 	<li>Bar Chart</li>
