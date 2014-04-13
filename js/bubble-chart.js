@@ -27,8 +27,6 @@ function drawExpertiseGraph(){
                         .size([diameter, diameter])
                         .padding(1.5);
 
-  console.log(bubble.nodes(data));
-
   // Create the svg and group element.
   var svg = d3.select("#graph").append('svg')
                               .attr('width', diameter)
